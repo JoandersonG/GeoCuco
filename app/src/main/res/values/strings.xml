@@ -1,17 +1,23 @@
 <resources>
     <string name="app_name">GeoCuco</string>
     <string name="title_activity_maps">Map</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="define_place">Defina o local para o alarme</string>
     <string name="search_location">Pesquise aqui o local</string>
     <string name="confirm_location">Confirmar local e continuar</string>
     <string name="create_new_alarm">Criar novo alarme geográfico</string>
     <string name="define_location">Defina o local para o alarme</string>
     <string name="define_alarm_name">Dê um nome ao alarme (opcional)</string>
-    <string name="hint_house_work">Casa, Trabalho...</string>
+    <string name="hint_house_work">Casa, Trabalho…</string>
     <string name="repeat_alarm">Deseja repetir o alarme?</string>
     <string name="define_time_interval">Deseja ativar o alarme apenas por algumas horas do dia?</string>
     <string name="from">De</string>
     <string name="to">até</string>
     <string name="save_new_alarm">Salvar novo alarme</string>
+    <string name="description_app_logo">app logo</string>
+    <string name="create_new_geo_alarm">Criar \n Novo \n Alarme \n Geográfico</string>
+    <string name="create_new_hour_alarm">Criar\n Novo\n Alarme\n Horário</string>
+    <string name="alarms_on">Alarmes Ativos</string>
+    <string name="alarms_off">Alarmes Inativos</string>
+    <string name="edit">Editar</string>
+    <string name="turn_off">Desativar</string>
 </resources>
