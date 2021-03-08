@@ -14,5 +14,9 @@
         android:id="@+id/homeFragment"
         android:name="com.joanderson.geocuco.view.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_createAlarmFragment"
+            app:destination="@id/createAlarmFragment" />
+    </fragment>
 </navigation>
