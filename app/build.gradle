@@ -56,7 +56,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     //Navigation Component
-    def nav_version = "2.3.3"
+    def nav_version = "2.3.4"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
