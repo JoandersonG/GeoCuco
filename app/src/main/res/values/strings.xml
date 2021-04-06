@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">GeoCuco</string>
     <string name="title_activity_maps">Map</string>
+    <!--CreateAlarmFragment-->
     <string name="define_place">Defina o local para o alarme</string>
     <string name="search_location">Pesquise aqui o local</string>
     <string name="confirm_location">Confirmar local e continuar</string>
@@ -13,16 +14,18 @@
     <string name="from">De</string>
     <string name="to">até</string>
     <string name="save_new_alarm">Salvar novo alarme</string>
-    <string name="description_app_logo">app logo</string>
-    <string name="create_new_geo_alarm">Criar \n Novo \n Alarme \n Geográfico</string>
-    <string name="create_new_hour_alarm">Criar\n Novo\n Alarme\n Horário</string>
-    <string name="alarms_on">Alarmes Ativos</string>
-    <string name="alarms_off">Alarmes Inativos</string>
-    <string name="edit">Editar</string>
-    <string name="turn_off">Desativar</string>
     <string name="close_app">Fechar aplicativo</string>
     <string name="allow">Permitir</string>
     <string name="location_required_message">Este aplicativo utiliza sua localização para saber quando tocar o alarme e, dessa forma, necessita que aceite a permissão de localização</string>
     <string name="location_required">Necessário aceitar a permissão de localização</string>
     <string name="location_app_settings_instruction">Por favor, entre em Permissões e permita acesso a seu local</string>
+    <!--HomeFragment-->
+    <string name="description_app_logo">app logo</string>
+    <string name="create_new_geo_alarm">Criar \n Novo \n Alarme \n Geográfico</string>
+    <string name="create_new_hour_alarm">Criar\n Novo\n Alarme\n Horário</string>
+    <string name="alarms_on">Alarmes Ativos</string>
+    <string name="alarms_off">Alarmes Inativos</string>
+    <!--AdapterAlarm-->
+    <string name="edit">Editar</string>
+    <string name="turn_off">Desativar</string>
 </resources>
