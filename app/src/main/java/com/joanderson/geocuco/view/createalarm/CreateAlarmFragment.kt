@@ -1,33 +1,71 @@
 package com.joanderson.geocuco.view.createalarm
 
-import androidx.fragment.app.Fragment
-
+import android.Manifest
+import android.app.AlertDialog
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.joanderson.geocuco.R
 import com.joanderson.geocuco.databinding.FragmentCreateAlarmBinding
+import com.joanderson.geocuco.observeOnce
+import com.joanderson.geocuco.view.UserLocationViewModel
 import java.util.*
 
+
 class CreateAlarmFragment : Fragment() {
+
+    private var locationPermissionGranted = false
 
     private var _binding: FragmentCreateAlarmBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: CreateAlarmViewModel by activityViewModels()
+    private val userLocationViewModel : UserLocationViewModel by activityViewModels()
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
+        when (requestCode) {
+            PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    //it is not permitted
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.apply {
+                        setTitle(getString(R.string.location_required))
+                        setMessage(getString(R.string.location_required_message))
+                        setPositiveButton(getString(R.string.allow)) { _, _ ->
+                            getLocationPermission()
+                        }
+                        setNegativeButton(getString(R.string.close_app)) { _, _ ->
+                            ActivityCompat.finishAffinity(requireActivity())
+                        }
+                    }.create().show()
+                }
+            }
+        }
     }
+
+    private fun getLocationPermission() {
+        if (ContextCompat.checkSelfPermission(requireContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            locationPermissionGranted = true
+        } else {
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -36,6 +74,16 @@ class CreateAlarmFragment : Fragment() {
         binding.viewModel = viewModel
         binding.includeAlarmDetails.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        userLocationViewModel.currentLocation.observeOnce(viewLifecycleOwner, {
+            val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+            mapFragment?.getMapAsync { googleMap ->
+                val locationToShow = LatLng(it.latitude, it.longitude)
+                googleMap.addMarker(MarkerOptions().position(locationToShow).title("user's last location"))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(locationToShow))
+            }
+        })
+
         setOnClick()
         manageRepeatAlarm()
         manageSelectHoursOfDay()
@@ -86,14 +134,12 @@ class CreateAlarmFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 100
     }
 }
